@@ -1,4 +1,4 @@
-FROM eclipse-temurin:21-jre-alpine@sha256:f153dfdd10e9846963676aa6ea8b8630f150a63c8e5fe127c93e98eb10b86766
+FROM azul/zulu-openjdk-alpine:21-jre-latest
 
 ENV REVIEWDOG_VERSION v0.17.2
 ENV CHECKSTYLE_VERSION 10.14.2
@@ -14,6 +14,5 @@ RUN wget -O - -q https://raw.githubusercontent.com/reviewdog/reviewdog/master/in
     wget -q -O /opt/lib/checkstyle.jar https://github.com/checkstyle/checkstyle/releases/download/checkstyle-${CHECKSTYLE_VERSION}/checkstyle-${CHECKSTYLE_VERSION}-all.jar
 
 COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]

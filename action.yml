@@ -51,7 +51,7 @@ inputs:
     default: ""
 runs:
   using: "docker"
-  image: "Dockerfile"
+  image: "docker://dberna/java-check-style"
 
 # Ref: https://haya14busa.github.io/github-action-brandings/
 branding:
