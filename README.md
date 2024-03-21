@@ -29,9 +29,9 @@ jobs:
           level: info
 ```
 
-# Input parameters
+## Input parameters
 
-## checkstyle_config
+### checkstyle_config
 
 Checkstyle configuration specifies which ruleset to apply during the scan.
 There are two built-in configurations:
@@ -42,7 +42,7 @@ It is also possible to supply your custom Checkstyle configuration file located 
 
 **`Default Value`** : `google_checks.xml`
 
-## Example
+### Example
 
 ``` yaml
 name: reviewdog
@@ -66,7 +66,7 @@ jobs:
           level: info
 ```
 
-## checkstyle_version
+### checkstyle_version
 
 Checkstyle version to be used during analysis.
 
@@ -97,7 +97,7 @@ jobs:
 
 ```
 
-# excluded_paths
+### excluded_paths
 
 En ocaciones queremos que las validaciones no se realicen en ficheros en concreto por diversas razones, para esto, basta 
 indicar los ficheros o rutas a excluir.
@@ -126,7 +126,7 @@ jobs:
 
 ```
 
-# workdir
+### workdir
 
 The working directory relative to the root directory.
 
@@ -144,7 +144,7 @@ Report level for the reviewdog command.
 
 **`Default Value`**: `info`
 
-# reporter
+### reporter
 
 Reporter for the reviewdog command.
 
@@ -152,7 +152,7 @@ Reporter for the reviewdog command.
 
 **`Default Value`**: `github-pr-check`
 
-# filter_mode
+### filter_mode
 
 Filtering mode for the reviewdog command.
 
@@ -160,7 +160,7 @@ Filtering mode for the reviewdog command.
 
 **`Default Value`**: `added`
 
-# fail_on_error
+### fail_on_error
 
 Exit code for reviewdog when errors are found.
 
