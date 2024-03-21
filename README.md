@@ -1,8 +1,12 @@
 # Checkstyle for Java using GitHub Action and Reviewdog
 
-This is a GitHub action to run Checkstyle checks on your Java code and report the status via reviewdog on pull requests.
+ReviewDog is a developer tool that automates the code review process, it seamlessly integrates with your GitHub Actions workflow and uses Checkstyle for java static code analysis.
 
-# Example
+# Prerequisites
+* A GitHub Actions workflow within your repository. If you don't have it set up yet, check out the official GitHub docs to get started.
+* A Checkstyle configuration xml file in your repository. This file defines the coding style rules - you can start with Google's or Sun's check files.
+
+# Action Configuration:
 
 An example of how the reported Checkstyle violations will look on a pull request is shown below (link to example PR):
 
@@ -29,16 +33,15 @@ jobs:
           level: info
 ```
 
-## Input parameters
+## Configuration options
+
+### github_token
+
+Your GitHub personal access token. It is typically stored as a secret in your GitHub repository.
 
 ### checkstyle_config
 
-Checkstyle configuration specifies which ruleset to apply during the scan.
-There are two built-in configurations:
-
-google_checks.xml config for the Google coding conventions
-sun_checks.xml config for the Sun coding conventions
-It is also possible to supply your custom Checkstyle configuration file located in the same directory.
+The checkstyle.xml file path where the team's agreed-upon configurations or coding rules are stored.
 
 **`Default Value`** : `google_checks.xml`
 
@@ -70,8 +73,6 @@ jobs:
 
 Checkstyle version to be used during analysis.
 
-For a list of available version numbers, go to the Checkstyle release page.
-
 **`Default Value`**: `10.14.2`
 
 ``` yaml
@@ -99,8 +100,8 @@ jobs:
 
 ### excluded_paths
 
-En ocaciones queremos que las validaciones no se realicen en ficheros en concreto por diversas razones, para esto, basta 
-indicar los ficheros o rutas a excluir.
+This is in reference to the distinct patterns for directories or files that should be left out during the CheckStyle scan. It is allowable to set a variety of exceptions.
+You have the option to designate specific files, paths, or utilize regular expressions for this purpose.
 
 ``` yaml
 name: reviewdog
@@ -120,7 +121,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           reporter: github-pr-review
-          excluded_paths: "**/SomeFile.java"
+          excluded_paths: ".*Test.*|.*Mock.*"
           level: info
            checkstyle_version: "{{put-your-version}}" # Value as string
 
@@ -128,11 +129,11 @@ jobs:
 
 ### workdir
 
-The working directory relative to the root directory.
+Defines the working directory within the repository for Checkstyle. This is typically the root directory
 
 **`Default Value`**: `.`
 
-# `level`
+### level
 
 Report level for the reviewdog command.
 
@@ -147,6 +148,7 @@ Report level for the reviewdog command.
 ### reporter
 
 Reporter for the reviewdog command.
+For mor information, you can check the [reviewdog reporter documentation](https://github.com/reviewdog/reviewdog?tab=readme-ov-file#reporters).
 
 **`Values`**: `[github-pr-check, github-check, github-pr-review]`
 
@@ -154,7 +156,8 @@ Reporter for the reviewdog command.
 
 ### filter_mode
 
-Filtering mode for the reviewdog command.
+This points to the mode for filtering used in the reviewdog command.
+For mor information, you can check the [reviewdog filter mode documentation](https://github.com/reviewdog/reviewdog?tab=readme-ov-file#filter-mode).
 
 **`Values`**: `[added, diff_context, file, nofilter]`
 
@@ -162,7 +165,8 @@ Filtering mode for the reviewdog command.
 
 ### fail_on_error
 
-Exit code for reviewdog when errors are found.
+This refers to the exit code that reviewdog will return when it encounters errors during its run. For more 
+information, you can check the [reviewdog fail on error documentation](https://github.com/reviewdog/reviewdog?tab=readme-ov-file#exit-codes).
 
 **`Values`**: `[true, false]`
 
