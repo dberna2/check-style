@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -euo pipefail
+set -e pipefail
 
 command -v reviewdog >/dev/null 2>&1 || { echo >&2 "reviewdog: not found"; exit 1; }
 

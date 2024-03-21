@@ -1,59 +1,42 @@
 name: "Checkstyle for Java"
 # description should be no more than 125 characters!
-description: "🐶 Run checkstyle analysis on Java code and report results directly to pull request with the help of reviewdog."
-author: "Dmitriy Belyaev"
+description: "Run Checkstyle analysis on Java code and report the results directly to the pull request using ReviewDog."
+author: "David Bernal"
 inputs:
   github_token:
-    description: "GITHUB_TOKEN"
+    description: "This is the GitHub personal access token used for authentication. It's required by ReviewDog to report the results of the Checkstyle analysis in the pull request"
     default: "${{ github.token }}"
   workdir:
-    description: "Working directory relative to the root directory."
+    description: " This is the current working directory. By default, it's the root directory of the repository."
     default: "."
-  ### Flags for reviewdog ###
+  excluded_paths:
+    description: "Directory/file pattern to exclude from CheckStyle. Multiple excludes are allowed"
+    default: ""
+  ### Configurations for Reviewdog ###
   level:
-    description: "Report level for reviewdog [info, warning, error]"
+    description: "This is the severity level that ReviewDog uses when reporting issues found. Levels can be info, warning, or error."
     default: "info"
   reporter:
-    description: "Reporter of reviewdog command [github-pr-check, github-pr-review]."
+    description: "This setting defines how issues found are reported. Possible values are github-check (will create a check review that appears in the PR's Checks tab), github-pr-check (comments will be attached to the PR's code line), and github-pr-review (will create a review on the PR)."
     default: "github-pr-check"
   filter_mode:
-    description: |
-      Filtering mode for the reviewdog command [added, diff_context, file, nofilter].
-      Default is added.
+    description: "This setting determines how ReviewDog filters results to report. Possible values are added (will report only on lines added in the PR), diff_context (will report only on changes in the diff context), file (will report on all changes in modified files), nofilter (all occurrences will be reported)."
     default: "added"
   fail_on_error:
-    description: |
-      Exit code for reviewdog when errors are found [true, false]
-      Default is `false`.
+    description: "his option allows the action's workflow to fail if ReviewDog finds any error. Possible values are true and false."
     default: "false"
-  reviewdog_flags:
-    description: "Additional reviewdog flags"
-    default: ""
-  ### Flags for checkstyle ###
+  ### Configurations for Checkstyle ###
   checkstyle_config:
-    description: |
-      Checkstyle configuration specifies which ruleset to apply during scan.
-      There are two built-in configurations in checkstyle: [google_checks.xml, sun_checks.xml].
-      google_checks.xml configures Checkstyle for the Google coding conventions (https://google.github.io/styleguide/javaguide.html)
-      sun_checks.xml configures Checkstyle for the Sun coding conventions (https://www.oracle.com/java/technologies/javase/codeconventions-contents.html)
-    default: "google_checks.xml"
+    description: "This is the path to the Checkstyle configuration file that defines the set of code style rules to use during the analysis."
+    default: "./google_checks.xml"
   checkstyle_version:
-    description: |
-      Checkstyle version to be used during analysis.
-      For a list of available version numbers go to [Checkstyle release page](https://github.com/checkstyle/checkstyle/releases/).
-      **IMPORTANT NOTE**
-      This field will always try to follow Checkstyle releases as close as possible and will use the latest available by default.
-      If it is not a default preference for your project, please, pin the needed version using this property.
-    default: ""
-  properties_file:
-    description: |
-      Location of the properties file relative to the root directory. This file serves as a means to resolve repetitive or predefined values within the checkstyle configuration file.
-    default: ""
+    description: "This is the Checkstyle version to be used during the analysis. By default, the latest version is used."
+    default: "latest"
+
 runs:
   using: "docker"
-  image: "docker://dberna/java-check-style"
+  image: "Dockerfile"
 
-# Ref: https://haya14busa.github.io/github-action-brandings/
 branding:
   icon: "check"
   color: "green"
