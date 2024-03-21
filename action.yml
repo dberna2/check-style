@@ -31,7 +31,7 @@ inputs:
     default: "./google_checks.xml"
   checkstyle_version:
     description: "This is the Checkstyle version to be used during the analysis. By default, the latest version is used."
-    default: "latest"
+    default: "10.14.2"
 
 runs:
   using: "docker"
