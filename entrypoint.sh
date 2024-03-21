@@ -4,7 +4,6 @@ set -e pipefail
 
 command -v reviewdog >/dev/null 2>&1 || { echo >&2 "reviewdog: not found"; exit 1; }
 
-# output some information
 { echo "Pre-installed"; java -jar /opt/lib/checkstyle.jar --version; } | sed ':a;N;s/\n/ /;ba'
 
 if [ -n "${GITHUB_WORKSPACE}" ] ; then
@@ -12,9 +11,12 @@ if [ -n "${GITHUB_WORKSPACE}" ] ; then
   git config --global --add safe.directory "${GITHUB_WORKSPACE}" || exit 1
 fi
 
-# user supplied custom properties file parameter, define it
 if [ -n "${INPUT_PROPERTIES_FILE}" ]; then
   OPTIONAL_PROPERTIES_FILE="-p ${INPUT_PROPERTIES_FILE}"
+fi
+
+if [ -n "${IMPUT_EXCLUDED_PATHDS}" ]; then
+  OPTIONAL_EXCLUDED_PATHS="-x ${IMPUT_EXCLUDED_PATHDS}"
 fi
 
 # user wants to use custom checkstyle version, try to install it
@@ -30,7 +32,8 @@ export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
 # run check
 { echo "Run check with"; java -jar /opt/lib/checkstyle.jar --version; } | sed ':a;N;s/\n/ /;ba'
 
-exec java -jar /opt/lib/checkstyle.jar "${INPUT_WORKDIR}" -c "${INPUT_CHECKSTYLE_CONFIG}" ${OPTIONAL_PROPERTIES_FILE} -f xml \
+exec java -jar /opt/lib/checkstyle.jar "${INPUT_WORKDIR}" \
+  -c "${INPUT_CHECKSTYLE_CONFIG}" ${OPTIONAL_PROPERTIES_FILE} ${OPTIONAL_EXCLUDED_PATHS} -f xml \
   | reviewdog -f=checkstyle \
       -name="checkstyle" \
       -reporter="${INPUT_REPORTER:-github-pr-check}" \
