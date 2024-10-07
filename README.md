@@ -73,7 +73,7 @@ jobs:
 
 Checkstyle version to be used during analysis.
 
-**`Default Value`**: `10.14.2`
+**`Default Value`**: `10.18.2`
 
 ``` yaml
 name: reviewdog

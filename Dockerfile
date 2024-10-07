@@ -1,7 +1,7 @@
 FROM azul/zulu-openjdk-alpine:21-jre-latest
 
-ENV REVIEWDOG_VERSION v0.17.2
-ENV CHECKSTYLE_VERSION 10.14.2
+ENV REVIEWDOG_VERSION v0.20.2
+ENV CHECKSTYLE_VERSION 10.18.2
 
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 
