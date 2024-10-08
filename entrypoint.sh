@@ -49,7 +49,7 @@ echo "OPTIONAL_PROPERTIES_FILE ${OPTIONAL_PROPERTIES_FILE}"
 
 echo "before exec"
 
-echo "exec java -classpath \"/opt/lib/checkstyle.jar:java-check-style-validations/target/java-check-style-validations-0.0.1-SNAPSHOT.jar\" \
+echo "exec java -classpath \"${CHECK_STYLE_CLASS_PATH}\" \
   com.puppycrawl.tools.checkstyle.Main \"${INPUT_WORKDIR}\" \
   -c \"${INPUT_CHECKSTYLE_CONFIG}\" \"${OPTIONAL_PROPERTIES_FILE}\" \"${OPTIONAL_EXCLUDED_PATHS}\" -f xml \
   | reviewdog -f=checkstyle \
@@ -62,7 +62,7 @@ echo "exec java -classpath \"/opt/lib/checkstyle.jar:java-check-style-validation
 
 echo "after exec"
 
-exec java -classpath "/opt/lib/checkstyle.jar:java-check-style-validations/target/java-check-style-validations-0.0.1-SNAPSHOT.jar" \
+exec java -classpath "${CHECK_STYLE_CLASS_PATH}" \
   com.puppycrawl.tools.checkstyle.Main "${INPUT_WORKDIR}" \
   -c "${INPUT_CHECKSTYLE_CONFIG}" "${OPTIONAL_PROPERTIES_FILE}" "${OPTIONAL_EXCLUDED_PATHS}" -f xml \
   | reviewdog -f=checkstyle \
