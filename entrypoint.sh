@@ -27,7 +27,7 @@ if [ "${INPUT_USE_CUSTOM_VALIDATIONS}" = "true" ]; then
   CHECK_STYLE_CLASS_PATH="-classpath /opt/lib/checkstyle.jar:${INPUT_CUSTOM_VALIDATIONS}"
   echo "Custom Checkstyle validator has been configured with value: ${CHECK_STYLE_CLASS_PATH}"
 else
-  CHECK_STYLE_CLASS_PATH="-classpath '/opt/lib/checkstyle.jar'"
+  CHECK_STYLE_CLASS_PATH="-classpath /opt/lib/checkstyle.jar"
 fi
 
 # user wants to use custom checkstyle version, try to install it
