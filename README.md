@@ -69,6 +69,68 @@ jobs:
           level: info
 ```
 
+### use_custom_validations
+
+This is a flag to enable the use of custom validations.
+
+**`Default Value`** : `false`
+
+### Example
+
+``` yaml
+name: reviewdog
+
+on:
+  pull_request:
+    types: [ opened, synchronize ]
+    
+jobs:
+  team-agreements-validation:
+    name: Validating team agreements
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dberna2/check-style@main
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          use_custom_validations: true
+          reporter: github-pr-review
+          checkstyle_config: google_checks.xml
+          level: info
+```
+### custom_validations
+
+This is the path to the custom validations jar file that defines the set of custom validations to use during the analysis.
+
+**`Default Value`** : `.`
+
+### Example
+
+``` yaml
+name: reviewdog
+
+on:
+  pull_request:
+    types: [ opened, synchronize ]
+    
+jobs:
+  team-agreements-validation:
+    name: Validating team agreements
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dberna2/check-style@main
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          use_custom_validations: true
+          custom_validations: custom-validations.jar
+          reporter: github-pr-review
+          checkstyle_config: google_checks.xml
+          level: info
+```
+
 ### checkstyle_version
 
 Checkstyle version to be used during analysis.
