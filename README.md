@@ -100,7 +100,7 @@ jobs:
           level: info
 ```
 
-> [!IMPORTAN]
+> [!IMPORTANT]
 > If `use_custom_validations` is true the `custom_validations` field is mandatory
 
 ### custom_validations
