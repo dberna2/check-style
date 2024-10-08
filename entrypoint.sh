@@ -48,12 +48,5 @@ echo "INPUT_WORKDIR ${INPUT_WORKDIR}"
 echo "OPTIONAL_PROPERTIES_FILE ${OPTIONAL_PROPERTIES_FILE}"
 
 exec java -classpath "/opt/lib/checkstyle.jar:java-check-style-validations/target/java-check-style-validations-0.0.1-SNAPSHOT.jar" \
-  com.puppycrawl.tools.checkstyle.Main \ "${INPUT_WORKDIR}" \
-  -c java-check-style-rest/src/main/resources/checkstyle-style.xml "${OPTIONAL_PROPERTIES_FILE}" "${OPTIONAL_EXCLUDED_PATHS}" -f xml \
-  | reviewdog -f=checkstyle \
-      -name="checkstyle" \
-      -reporter="${INPUT_REPORTER:-github-pr-check}" \
-      -filter-mode="${INPUT_FILTER_MODE:-added}" \
-      -fail-on-error="${INPUT_FAIL_ON_ERROR:-false}" \
-      -level="${INPUT_LEVEL}" \
-      "${INPUT_REVIEWDOG_FLAGS}" -
+  com.puppycrawl.tools.checkstyle.Main "${INPUT_WORKDIR}" \
+  -c java-check-style-rest/src/main/resources/checkstyle-style.xml "${OPTIONAL_PROPERTIES_FILE}" "${OPTIONAL_EXCLUDED_PATHS}" -f xml
