@@ -19,7 +19,7 @@ if [ -n "${IMPUT_EXCLUDED_PATHDS}" ]; then
   OPTIONAL_EXCLUDED_PATHS="-x ${IMPUT_EXCLUDED_PATHDS}"
 fi
 
-if [ -n "${INPUT_USE_CUSTOM_VALIDATIONS}" ]; then
+if [ "${INPUT_USE_CUSTOM_VALIDATIONS}" = "true" ]; then
   if [ -z "${INPUT_CUSTOM_VALIDATIONS}" ]; then
     echo "Custom Checkstyle validator has been configured but no value was provided"
     exit 1
