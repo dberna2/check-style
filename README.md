@@ -99,6 +99,10 @@ jobs:
           checkstyle_config: google_checks.xml
           level: info
 ```
+
+> [!IMPORTAN]
+> If `use_custom_validations` is true the `custom_validations` field is mandatory
+
 ### custom_validations
 
 This is the path to the custom validations jar file that defines the set of custom validations to use during the analysis.
