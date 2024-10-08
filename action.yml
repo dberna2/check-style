@@ -29,6 +29,12 @@ inputs:
   checkstyle_config:
     description: "This is the path to the Checkstyle configuration file that defines the set of code style rules to use during the analysis."
     default: "./google_checks.xml"
+  use_custom_validations:
+    description: "This is a flag to enable the use of custom validations. By default, it's disabled."
+    default: "false"
+  custom_validations:
+    description: "This is the path to the custom validations file that defines the set of custom validations to use during the analysis."
+    default: "."
   checkstyle_version:
     description: "This is the Checkstyle version to be used during the analysis. By default, the latest version is used."
     default: "10.18.2"

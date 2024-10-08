@@ -19,6 +19,17 @@ if [ -n "${IMPUT_EXCLUDED_PATHDS}" ]; then
   OPTIONAL_EXCLUDED_PATHS="-x ${IMPUT_EXCLUDED_PATHDS}"
 fi
 
+if [ -n "${INPUT_USE_CUSTOM_VALIDATIONS}" ]; then
+  if [ -z "${INPUT_CUSTOM_VALIDATIONS}" ]; then
+    echo "Custom Checkstyle validator has been configured but no value was provided"
+    exit 1
+  fi
+  CHECK_STYLE_CLASS_PATH="-classpath '/opt/lib/checkstyle.jar:${INPUT_CUSTOM_VALIDATIONS}'"
+  echo "Custom Checkstyle validator has been configured with value: '${CHECK_STYLE_CLASS_PATH}'"
+else
+  CHECK_STYLE_CLASS_PATH="-classpath '/opt/lib/checkstyle.jar'"
+fi
+
 # user wants to use custom checkstyle version, try to install it
 if [ -n "${INPUT_CHECKSTYLE_VERSION}" ]; then
   url="https://github.com/checkstyle/checkstyle/releases/download/checkstyle-${INPUT_CHECKSTYLE_VERSION}/checkstyle-${INPUT_CHECKSTYLE_VERSION}-all.jar"
@@ -32,7 +43,7 @@ export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
 # run check
 { echo "Run check with"; java -jar /opt/lib/checkstyle.jar --version; } | sed ':a;N;s/\n/ /;ba'
 
-exec java -jar /opt/lib/checkstyle.jar "${INPUT_WORKDIR}" \
+exec java CHECK_STYLE_CLASS_PATH com.puppycrawl.tools.checkstyle.Main "${INPUT_WORKDIR}" \
   -c "${INPUT_CHECKSTYLE_CONFIG}" ${OPTIONAL_PROPERTIES_FILE} ${OPTIONAL_EXCLUDED_PATHS} -f xml \
   | reviewdog -f=checkstyle \
       -name="checkstyle" \
