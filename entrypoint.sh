@@ -19,6 +19,15 @@ if [ -n "${IMPUT_EXCLUDED_PATHDS}" ]; then
   OPTIONAL_EXCLUDED_PATHS="-x ${IMPUT_EXCLUDED_PATHDS}"
 fi
 
+# user wants to use custom checkstyle version, try to install it
+if [ -n "${INPUT_CHECKSTYLE_VERSION}" ]; then
+  url="https://github.com/checkstyle/checkstyle/releases/download/checkstyle-${INPUT_CHECKSTYLE_VERSION}/checkstyle-${INPUT_CHECKSTYLE_VERSION}-all.jar"
+
+  echo "Custom Checkstyle version has been configured: 'v${INPUT_CHECKSTYLE_VERSION}', try to download from ${url}"
+  wget -q -O /opt/lib/checkstyle.jar "$url"
+  echo "Custom checkstyle version has been downloaded successfully"
+fi
+
 if [ "${INPUT_USE_CUSTOM_VALIDATIONS}" = "true" ]; then
   if [ -z "${INPUT_CUSTOM_VALIDATIONS}" ]; then
     echo "Custom Checkstyle validator has been configured but no value was provided"
@@ -28,14 +37,7 @@ if [ "${INPUT_USE_CUSTOM_VALIDATIONS}" = "true" ]; then
   echo "Custom Checkstyle validator has been configured with value: ${CHECK_STYLE_CLASS_PATH}"
 else
   CHECK_STYLE_CLASS_PATH="-classpath /opt/lib/checkstyle.jar"
-fi
-
-# user wants to use custom checkstyle version, try to install it
-if [ -n "${INPUT_CHECKSTYLE_VERSION}" ]; then
-  url="https://github.com/checkstyle/checkstyle/releases/download/checkstyle-${INPUT_CHECKSTYLE_VERSION}/checkstyle-${INPUT_CHECKSTYLE_VERSION}-all.jar"
-
-  echo "Custom Checkstyle version has been configured: 'v${INPUT_CHECKSTYLE_VERSION}', try to download from ${url}"
-  wget -q -O /opt/lib/checkstyle.jar "$url"
+  echo "Custom Checkstyle validator has been configured with value: ${CHECK_STYLE_CLASS_PATH}"
 fi
 
 export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
