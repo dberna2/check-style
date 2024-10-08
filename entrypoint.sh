@@ -24,8 +24,8 @@ if [ "${INPUT_USE_CUSTOM_VALIDATIONS}" = "true" ]; then
     echo "Custom Checkstyle validator has been configured but no value was provided"
     exit 1
   fi
-  CHECK_STYLE_CLASS_PATH="-classpath '/opt/lib/checkstyle.jar:${INPUT_CUSTOM_VALIDATIONS}'"
-  echo "Custom Checkstyle validator has been configured with value: '${CHECK_STYLE_CLASS_PATH}'"
+  CHECK_STYLE_CLASS_PATH="-classpath /opt/lib/checkstyle.jar:${INPUT_CUSTOM_VALIDATIONS}"
+  echo "Custom Checkstyle validator has been configured with value: ${CHECK_STYLE_CLASS_PATH}"
 else
   CHECK_STYLE_CLASS_PATH="-classpath '/opt/lib/checkstyle.jar'"
 fi
