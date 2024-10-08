@@ -43,9 +43,8 @@ export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
 { echo "Run check with"; java -jar /opt/lib/checkstyle.jar --version; } | sed ':a;N;s/\n/ /;ba'
 
 exec java -classpath "/opt/lib/checkstyle.jar:java-check-style-validations/target/java-check-style-validations-0.0.1-SNAPSHOT.jar" \
-  com.puppycrawl.tools.checkstyle.Main \
-  "${INPUT_WORKDIR}" \
-  -c "${INPUT_CHECKSTYLE_CONFIG}" "${OPTIONAL_PROPERTIES_FILE}" "${OPTIONAL_EXCLUDED_PATHS}" -f xml \
+  com.puppycrawl.tools.checkstyle.Main "${INPUT_WORKDIR}" \
+  -c java-check-style-rest/src/main/resources/checkstyle-style.xml "${OPTIONAL_PROPERTIES_FILE}" "${OPTIONAL_EXCLUDED_PATHS}" -f xml \
   | reviewdog -f=checkstyle \
       -name="checkstyle" \
       -reporter="${INPUT_REPORTER:-github-pr-check}" \
