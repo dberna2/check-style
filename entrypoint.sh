@@ -25,7 +25,6 @@ if [ -n "${INPUT_CHECKSTYLE_VERSION}" ]; then
 
   echo "Custom Checkstyle version has been configured: 'v${INPUT_CHECKSTYLE_VERSION}', try to download from ${url}"
   wget -q -O /opt/lib/checkstyle.jar "$url"
-  echo "Custom checkstyle version has been downloaded successfully"
 fi
 
 if [ "${INPUT_USE_CUSTOM_VALIDATIONS}" = "true" ]; then
@@ -34,10 +33,8 @@ if [ "${INPUT_USE_CUSTOM_VALIDATIONS}" = "true" ]; then
     exit 1
   fi
   CHECK_STYLE_CLASS_PATH="-classpath /opt/lib/checkstyle.jar:${INPUT_CUSTOM_VALIDATIONS}"
-  echo "Custom Checkstyle validator has been configured with value: ${CHECK_STYLE_CLASS_PATH}"
 else
   CHECK_STYLE_CLASS_PATH="-classpath /opt/lib/checkstyle.jar"
-  echo "Custom Checkstyle validator has been configured with value: ${CHECK_STYLE_CLASS_PATH}"
 fi
 
 export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
@@ -45,12 +42,4 @@ export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
 # run check
 { echo "Run check with"; java -jar /opt/lib/checkstyle.jar --version; } | sed ':a;N;s/\n/ /;ba'
 
-exec java "${CHECK_STYLE_CLASS_PATH}" com.puppycrawl.tools.checkstyle.Main "${INPUT_WORKDIR}" \
-  -c "${INPUT_CHECKSTYLE_CONFIG}" "${OPTIONAL_PROPERTIES_FILE}" "${OPTIONAL_EXCLUDED_PATHS}" -f xml \
-  | reviewdog -f=checkstyle \
-      -name="checkstyle" \
-      -reporter="${INPUT_REPORTER:-github-pr-check}" \
-      -filter-mode="${INPUT_FILTER_MODE:-added}" \
-      -fail-on-error="${INPUT_FAIL_ON_ERROR:-false}" \
-      -level="${INPUT_LEVEL}" \
-      "${INPUT_REVIEWDOG_FLAGS}" -
+exec java -classpath /opt/lib/checkstyle.jar:java-check-style-validations/target/java-check-style-validations-0.0.1-SNAPSHOT.jar com.puppycrawl.tools.checkstyle.Main -c java-check-style-rest/src/main/resources/checkstyle-style.xml .
