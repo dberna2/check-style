@@ -32,9 +32,9 @@ if [ "${INPUT_USE_CUSTOM_VALIDATIONS}" = "true" ]; then
     echo "Custom Checkstyle validator has been configured but no value was provided"
     exit 1
   fi
-  CHECK_STYLE_CLASS_PATH="-classpath /opt/lib/checkstyle.jar:${INPUT_CUSTOM_VALIDATIONS}"
+  CHECK_STYLE_CLASS_PATH="/opt/lib/checkstyle.jar:${INPUT_CUSTOM_VALIDATIONS}"
 else
-  CHECK_STYLE_CLASS_PATH="-classpath /opt/lib/checkstyle.jar"
+  CHECK_STYLE_CLASS_PATH="/opt/lib/checkstyle.jar"
 fi
 
 export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
@@ -49,7 +49,7 @@ echo "OPTIONAL_PROPERTIES_FILE ${OPTIONAL_PROPERTIES_FILE}"
 
 echo "before exec"
 
-echo "exec java \"${CHECK_STYLE_CLASS_PATH}\" \
+echo "exec java -classpath \"${CHECK_STYLE_CLASS_PATH}\" \
   com.puppycrawl.tools.checkstyle.Main \"${INPUT_WORKDIR}\" \
   -c \"${INPUT_CHECKSTYLE_CONFIG}\" \"${OPTIONAL_PROPERTIES_FILE}\" \"${OPTIONAL_EXCLUDED_PATHS}\" -f xml \
   | reviewdog -f=checkstyle \
@@ -62,7 +62,7 @@ echo "exec java \"${CHECK_STYLE_CLASS_PATH}\" \
 
 echo "after exec"
 
-exec java "${CHECK_STYLE_CLASS_PATH}" \
+exec java -classpath "${CHECK_STYLE_CLASS_PATH}" \
   com.puppycrawl.tools.checkstyle.Main "${INPUT_WORKDIR}" \
   -c "${INPUT_CHECKSTYLE_CONFIG}" "${OPTIONAL_PROPERTIES_FILE}" "${OPTIONAL_EXCLUDED_PATHS}" -f xml \
   | reviewdog -f=checkstyle \
