@@ -62,7 +62,7 @@ echo "exec java -classpath \"${CHECK_STYLE_CLASS_PATH}\" \
 
 echo "after exec"
 
-exec java -classpath "${CHECK_STYLE_CLASS_PATH}" \
+exec java "${CHECK_STYLE_CLASS_PATH}" \
   com.puppycrawl.tools.checkstyle.Main "${INPUT_WORKDIR}" \
   -c "${INPUT_CHECKSTYLE_CONFIG}" "${OPTIONAL_PROPERTIES_FILE}" "${OPTIONAL_EXCLUDED_PATHS}" -f xml \
   | reviewdog -f=checkstyle \
