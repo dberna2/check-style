@@ -8,7 +8,7 @@ ReviewDog is a developer tool that automates the code review process, it seamles
 
 # Action Configuration:
 
-Here is an example of how Checkstyle violations will be displayed in a [pull request](https://github.com/dberna2/java-check-style-example/pull/1).
+Here is an example of how Checkstyle violations will be displayed in a [pull request](https://github.com/dberna2/java-check-style-example/pull/2).
 
 # Basic Usage
 
